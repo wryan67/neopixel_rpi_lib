@@ -66,7 +66,7 @@ int neopixel_render(void) {
     return ret;
 }
 
-int matrix_clear(void) {
+int neopixel_clear(void) {
     int ret;
     for (int i = 0; i < ledstring.channel[0].count; i++) {
         ledstring.channel[0].leds[i] = 0;

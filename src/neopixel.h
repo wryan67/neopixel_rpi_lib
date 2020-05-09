@@ -31,7 +31,7 @@ extern "C" {
 
 int neopixel_init(int stripType, int targetFreq, int dmaChannel, int gpioPin, int ledCount);
 
-void neopixel_clear(void);
+int neopixel_clear(void);
 int  neopixel_render(void);
 const char *neopixel_error(int ret);
 int neopixel_wheel(unsigned char color);                  

@@ -132,6 +132,7 @@ executable() {
   DYNAMIC=`echo $LIBNAME | sed 's/^lib//'`
 
   userEcho $CC -lwiringPi -l$DYNAMIC example/main.cpp -o $BIN/demo
+  userEcho $CC -lwiringPi -l$DYNAMIC example/off.cpp  -o $BIN/off
 }
 
 #:###################:#
@@ -249,5 +250,7 @@ done
 [ $INSTALL = 1 ]     && install
 [ $EXECUTABLE = 1 ]  && executable
 [ $REMOVE = 1 ]      && remove
+
+chown -R `logname`:`ls -lad .|awk '{print $4}'` .
 
 exit 0
