@@ -4,5 +4,9 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {},
+	"C_Cpp.default.browse.path": [ 
+		"/projects/pi/local/include",
+		"/projects/pi/system/include"
+	]
 }
