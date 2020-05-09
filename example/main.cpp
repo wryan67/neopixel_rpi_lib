@@ -18,7 +18,7 @@ int led_count =                144;
 
 
 int main(int argc, char* argv[]) {
-    ws2811_return_t ret;
+    int ret;
 
 
     if (neopixel_init(WS2812_STRIP, WS2811_TARGET_FREQ, DMA, GPIO_PIN, led_count)!=0) {
@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
         int clr = count % 256;
         int pixelColor =  neopixel_wheel(clr);
 
-        printf("clr=%3d  0x%06x\r", clr, pixelColor);  fflush(stdout);
+//        printf("clr=%3d  0x%06x\r", clr, pixelColor);  fflush(stdout);
 
         for (int i = 0; i < led_count; ++i) {
             neopixel_setPixel(i,neopixel_wheel((i + count) % 256));
@@ -46,6 +46,7 @@ int main(int argc, char* argv[]) {
         neopixel_render();
         // frames/sec
         usleep(1000000 / 60);
+
     }
 
     neopixel_clear();
