@@ -1,0 +1,11 @@
+src/includes.h
+src/clk.h
+src/dma.h
+src/gpio.h
+src/mailbox.h
+src/pcm.h
+src/pwm.h
+src/rpihw.h
+src/version.h
+src/ws2811.h
+src/neopixel.h
