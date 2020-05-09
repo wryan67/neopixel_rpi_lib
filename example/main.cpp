@@ -25,7 +25,8 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "ws2811_init failed: %s\n", neopixel_error(ret));
         return 9;
     }
-    
+
+    neopixel_setBrighness(8);
 
     int count = -1;
     while (true) {
