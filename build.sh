@@ -132,7 +132,7 @@ executable() {
   STATIC=${DESTDIR}${PREFIX}/lib/$LIBNAME.a
   DYNAMIC=`echo $LIBNAME | sed 's/^lib//'`
 
-  userEcho $CC -lwiringPi -l$DYNAMIC example/rainbow.cpp -o $BIN/demo
+  userEcho $CC -lwiringPi -l$DYNAMIC example/rainbow.cpp -o $BIN/rainbow
   userEcho $CC -lwiringPi -l$DYNAMIC example/off.cpp  -o $BIN/off
 # userEcho $CC -lwiringPi -l$DYNAMIC example/displayBMP.cpp -o $BIN/displayBMP
 
