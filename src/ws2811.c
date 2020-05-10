@@ -177,7 +177,7 @@ static int map_registers(ws2811_t *ws2811)
     }
 
     switch (device->driver_mode) {
-    case PWM:
+    case NEOPIXEL_PWM:
         device->pwm = mapmem(PWM_OFFSET + base, sizeof(pwm_t), DEV_MEM);
         if (!device->pwm)
         {
@@ -185,7 +185,7 @@ static int map_registers(ws2811_t *ws2811)
         }
         break;
 
-    case PCM:
+    case NEOPIXEL_PCM:
         device->pcm = mapmem(PCM_OFFSET + base, sizeof(pcm_t), DEV_MEM);
         if (!device->pcm)
         {
@@ -206,10 +206,10 @@ static int map_registers(ws2811_t *ws2811)
     }
 
     switch (device->driver_mode) {
-    case PWM:
+    case NEOPIXEL_PWM:
         offset = CM_PWM_OFFSET;
         break;
-    case PCM:
+    case NEOPIXEL_PCM:
         offset = CM_PCM_OFFSET;
         break;
     }
@@ -507,7 +507,7 @@ static void dma_start(ws2811_t *ws2811)
               RPI_DMA_CS_PRIORITY(15) |
               RPI_DMA_CS_ACTIVE;
 
-    if (device->driver_mode == PCM)
+    if (device->driver_mode == NEOPIXEL_PCM)
     {
         pcm->cs |= RPI_PCM_CS_TXON;  // Start transmission
     }
@@ -534,10 +534,10 @@ static int gpio_init(ws2811_t *ws2811)
         {
             switch (ws2811->device->driver_mode)
             {
-            case PWM:
+            case NEOPIXEL_PWM:
                 altnum = pwm_pin_alt(chan, pinnum);
                 break;
-            case PCM:
+            case NEOPIXEL_PCM:
                 altnum = pcm_pin_alt(PCMFUN_DOUT, pinnum);
                 break;
             default:
@@ -659,7 +659,7 @@ static int set_driver_mode(ws2811_t *ws2811, int gpionum)
     int gpionum2;
 
     if (gpionum == 18 || gpionum == 12) {
-        ws2811->device->driver_mode = PWM;
+        ws2811->device->driver_mode = NEOPIXEL_PWM;
         // Check gpio for PWM1 (2nd channel) is OK if used
         gpionum2 = ws2811->channel[1].gpionum;
         if (gpionum2 == 0 || gpionum2 == 13 || gpionum2 == 19) {
@@ -667,10 +667,10 @@ static int set_driver_mode(ws2811_t *ws2811, int gpionum)
         }
     }
     else if (gpionum == 21 || gpionum == 31) {
-        ws2811->device->driver_mode = PCM;
+        ws2811->device->driver_mode = NEOPIXEL_PCM;
     }
     else if (gpionum == 10) {
-        ws2811->device->driver_mode = SPI;
+        ws2811->device->driver_mode = NEOPIXEL_SPI;
     }
     else {
         fprintf(stderr, "gpionum %d not allowed\n", gpionum);
@@ -723,7 +723,7 @@ static int check_hwver_and_gpionum(ws2811_t *ws2811)
             gpionum = ws2811->channel[1].gpionum;
             if ((gpionum == 13) || (gpionum == 19))
             {
-                ws2811->device->driver_mode = PWM;
+                ws2811->device->driver_mode = NEOPIXEL_PWM;
                 return 0;
             }
             else {
@@ -913,18 +913,18 @@ ws2811_return_t ws2811_init(ws2811_t *ws2811,int mode)
     device->max_count = max_channel_led_count(ws2811);
 
     device->driver_mode=mode;
-    if (device->driver_mode == SPI) {
+    if (device->driver_mode == NEOPIXEL_SPI) {
         return spi_init(ws2811);
     }
 
     // Determine how much physical memory we need for DMA
     switch (device->driver_mode) {
-    case PWM:
+    case NEOPIXEL_PWM:
         device->mbox.size = PWM_BYTE_COUNT(device->max_count, ws2811->freq) +
                             sizeof(dma_cb_t);
         break;
 
-    case PCM:
+    case NEOPIXEL_PCM:
         device->mbox.size = PCM_BYTE_COUNT(device->max_count, ws2811->freq) +
                             sizeof(dma_cb_t);
         break;
@@ -1010,11 +1010,11 @@ ws2811_return_t ws2811_init(ws2811_t *ws2811,int mode)
     device->pxl_raw = (uint8_t *)device->mbox.virt_addr + sizeof(dma_cb_t);
 
     switch (device->driver_mode) {
-    case PWM:
+    case NEOPIXEL_PWM:
        pwm_raw_init(ws2811);
        break;
 
-    case PCM:
+    case NEOPIXEL_PCM:
        pcm_raw_init(ws2811);
        break;
     }
@@ -1040,7 +1040,7 @@ ws2811_return_t ws2811_init(ws2811_t *ws2811,int mode)
     }
 
     switch (device->driver_mode) {
-    case PWM:
+    case NEOPIXEL_PWM:
         // Setup the PWM, clocks, and DMA
         if (setup_pwm(ws2811))
         {
@@ -1049,7 +1049,7 @@ ws2811_return_t ws2811_init(ws2811_t *ws2811,int mode)
             return WS2811_ERROR_PWM_SETUP;
         }
         break;
-    case PCM:
+    case NEOPIXEL_PCM:
     // Setup the PCM, clock, and DMA
         if (setup_pcm(ws2811))
         {
@@ -1076,10 +1076,10 @@ void ws2811_fini(ws2811_t *ws2811)
 
     ws2811_wait(ws2811);
     switch (ws2811->device->driver_mode) {
-    case PWM:
+    case NEOPIXEL_PWM:
         stop_pwm(ws2811);
         break;
-    case PCM:
+    case NEOPIXEL_PCM:
         while (!(pcm->cs & RPI_PCM_CS_TXE)) ;    // Wait till TX FIFO is empty
         stop_pcm(ws2811);
         break;
@@ -1101,7 +1101,7 @@ ws2811_return_t ws2811_wait(ws2811_t *ws2811)
 {
     volatile dma_t *dma = ws2811->device->dma;
 
-    if (ws2811->device->driver_mode == SPI)  // Nothing to do for SPI
+    if (ws2811->device->driver_mode == NEOPIXEL_SPI)  // Nothing to do for SPI
     {
         return WS2811_SUCCESS;
     }
@@ -1140,7 +1140,7 @@ ws2811_return_t  ws2811_render(ws2811_t *ws2811)
     uint32_t protocol_time = 0;
     static uint64_t previous_timestamp = 0;
 
-    bitpos = (driver_mode == SPI ? 7 : 31);
+    bitpos = (driver_mode == NEOPIXEL_SPI ? 7 : 31);
 
     for (chan = 0; chan < RPI_PWM_CHANNELS; chan++)         // Channel
     {
@@ -1182,12 +1182,12 @@ ws2811_return_t  ws2811_render(ws2811_t *ws2811)
                 {
                     // Inversion is handled by hardware for PWM, otherwise by software here
                     uint8_t symbol = SYMBOL_LOW;
-                    if ((driver_mode != PWM) && channel->invert) symbol = SYMBOL_LOW_INV;
+                    if ((driver_mode != NEOPIXEL_PWM) && channel->invert) symbol = SYMBOL_LOW_INV;
 
                     if (color[j] & (1 << k))
                     {
                         symbol = SYMBOL_HIGH;
-                        if ((driver_mode != PWM) && channel->invert) symbol = SYMBOL_HIGH_INV;
+                        if ((driver_mode != NEOPIXEL_PWM) && channel->invert) symbol = SYMBOL_HIGH_INV;
                     }
 
                     for (l = 2; l >= 0; l--)               // Symbol
@@ -1195,7 +1195,7 @@ ws2811_return_t  ws2811_render(ws2811_t *ws2811)
                         uint32_t *wordptr = &((uint32_t *)pxl_raw)[wordpos];   // PWM & PCM
                         volatile uint8_t  *byteptr = &pxl_raw[bytepos];    // SPI
 
-                        if (driver_mode == SPI)
+                        if (driver_mode == NEOPIXEL_SPI)
                         {
                             *byteptr &= ~(1 << bitpos);
                             if (symbol & (1 << l))
@@ -1215,7 +1215,7 @@ ws2811_return_t  ws2811_render(ws2811_t *ws2811)
                         bitpos--;
                         if (bitpos < 0)
                         {
-                            if (driver_mode == SPI)
+                            if (driver_mode == NEOPIXEL_SPI)
                             {
                                 bytepos++;
                                 bitpos = 7;
@@ -1223,7 +1223,7 @@ ws2811_return_t  ws2811_render(ws2811_t *ws2811)
                             else  // PWM & PCM
                             {
                                 // Every other word is on the same channel for PWM
-                                wordpos += (driver_mode == PWM ? 2 : 1);
+                                wordpos += (driver_mode == NEOPIXEL_PWM ? 2 : 1);
                                 bitpos = 31;
                             }
                         }
@@ -1248,7 +1248,7 @@ ws2811_return_t  ws2811_render(ws2811_t *ws2811)
         }
     }
 
-    if (driver_mode != SPI)
+    if (driver_mode != NEOPIXEL_SPI)
     {
         dma_start(ws2811);
     }

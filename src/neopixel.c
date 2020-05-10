@@ -34,7 +34,7 @@ int neopixel_init(int stripType, int targetFreq, int dmaChannel, int gpioPin, in
     ledstring.channel[0].count = ledCount;
     ledstring.channel[0].strip_type = stripType;
 
-    return ws2811_init(&ledstring, PWM);
+    return ws2811_init(&ledstring, NEOPIXEL_PWM);
 
 }
 

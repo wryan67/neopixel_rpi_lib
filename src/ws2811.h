@@ -39,10 +39,10 @@ extern "C" {
 #include "pwm.h"
 
 // Driver mode definitions
-#define NONE	0
-#define PWM	1
-#define PCM	2
-#define SPI	3
+#define NEOPIXEL_NONE	0
+#define NEOPIXEL_PWM	1
+#define NEOPIXEL_PCM	2
+#define NEOPIXEL_SPI	3
 
 
 #define WS2811_TARGET_FREQ                       800000   // Can go as low as 400000
