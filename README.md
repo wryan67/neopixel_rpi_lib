@@ -21,7 +21,6 @@ To compile this library, navigate into the src folder and use the make utility t
 and install the library.
 
     $ cd neopixel_rpi_lib
-    $ cd src
     $ make install
 
 
