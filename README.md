@@ -1,5 +1,6 @@
 # NeoPixel Raspberry Pi Library
 
+This library will allow you to control neopixels via hardware PWM on the Raspberry Pi.  It is based on [Jeremy Garff](https://github.com/jgarff/rpi_ws281x)'s driver, however, this libarary will install install itself as a dynamic library which will allow you to create many different projects without needing to copy the neopixel source files into every project you create.
 
 Copyright (c) 2020 Wade Ryan
 
