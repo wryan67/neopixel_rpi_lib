@@ -30,7 +30,7 @@ Complie your applications using these command line arguments: -lNeoPixelRPi
 
 
 ## Example
-To run the example program, nagaviate into the example folder and use make to compile the program.  The timestamp 
+The insall should have also compiled the demo programs to the bin folder.  Since the library used DMA, the programs need to be run via sudo:
 
     $ sudo bin/rainbow
 
