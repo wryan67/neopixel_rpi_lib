@@ -1,6 +1,6 @@
 # NeoPixel Raspberry Pi Library
 
-This library will allow you to control neopixels via hardware PWM on the Raspberry Pi.  It is based on [Jeremy Garff](https://github.com/jgarff/rpi_ws281x)'s driver, however, this libarary will install install itself as a dynamic library which will allow you to create many different projects without needing to copy the neopixel source files into every project you create.
+This library will allow you to control NeoPixels via hardware PWM on the Raspberry Pi.  It is based on [Jeremy Garff](https://github.com/jgarff/rpi_ws281x)'s driver, however, this libarary will install install itself as a dynamic library which will allow you to create many different projects without needing to copy the neopixel source files into every project you create.
 
 Copyright (c) 2020 Wade Ryan
 
@@ -29,3 +29,10 @@ To run the example program, nagaviate into the example folder and use make to co
     $ $ accessing ads1115 chip on i2c address 48
     $ Timestamp       Delta       A0       A1       A2       A3
     $ 1575219689268      44     1.73     3.91     0.00     0.00
+
+
+## Supports
+ 
+* ws2811
+* ws2812
+* ws2812b
