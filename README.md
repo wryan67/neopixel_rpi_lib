@@ -11,13 +11,18 @@ Copyright (c) 2020 Wade Ryan
 This library currently only supports pwm on RPi's header pin 12 (BCM-18).
 
 
+## Download
+
+$ git clone https://github.com/wryan67/neopixel_rpi_lib.git
+
+
 ## Install
 To compile this library, navigate into the src folder and use the make utility to compile 
 and install the library.
 
-    $ cd [project folder]
+    $ cd neopixel_rpi_lib
     $ cd src
-    $ make && sudo make install
+    $ make install
 
 
 ## Compiling
