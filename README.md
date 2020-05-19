@@ -30,7 +30,7 @@ and install the library.
 Complie your applications using these command line arguments: -lNeoPixelRPi
 
 ## Example
-The insall should have also compiled the demo programs to the bin folder.  Since the library used DMA, the programs need to be run via sudo:
+The insall should have also compiled the demo programs to the bin folder.  Check the example folder for the source code examples to use in your programs.  Since the library used DMA, the programs need to be run via sudo:
 
     $ sudo bin/rainbow
 
@@ -41,6 +41,10 @@ The insall should have also compiled the demo programs to the bin folder.  Since
 * ws2812
 * ws2812b
 
+
+## Color Wheel
+
+A method is provided which gives 
 
 ## Circuit diagram
 
