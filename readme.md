@@ -30,7 +30,7 @@ and install the library.
 Complie your applications using these command line arguments: -lNeoPixelRPi
 
 ## Example
-The insall should have also compiled the demo programs to the bin folder.  Check the example folder for the source code examples to use in your programs.  Since the library used DMA, the programs need to be run via sudo:
+The install should have also compiled the demo programs to the bin folder.  Check the example folder for the source code examples to use in your programs.  Since the library used DMA, the programs need to be run via sudo:
 
     $ sudo bin/rainbow
 
