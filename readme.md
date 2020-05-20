@@ -46,10 +46,10 @@ The insall should have also compiled the demo programs to the bin folder.  Check
 
 The user may create their own colors or use the color chart below to choose colors from.  The method neopixel_wheel(int color), where color is a number betweeen 0 and 255, will return a valid RGB color which matches the chart below. 
 
-![thumbnail](https://raw.githubusercontent.com/wryan67/neopixel_rpi_lib/master/0721563A-FED3-4509-8F35-9F81FB402A98.png)
+![thumbnail](https://raw.githubusercontent.com/wryan67/neopixel_rpi_lib/master/readme/ColorWheel.png)
 
 ## Circuit diagram
 
 Again be sure to use a seperate power source for your NeoPixels as the RPi is not strong enough to drive them.
 
-![thumbnail](https://raw.githubusercontent.com/wryan67/neopixel_rpi_lib/master/circuit%20diagram%20ws2812.png)
+![thumbnail](https://raw.githubusercontent.com/wryan67/neopixel_rpi_lib/master/readme/circuit%20diagram%20ws2812.png)

@@ -1,59 +1,73 @@
-#include <stdio.h>
-#include <stdarg.h>
-#include <getopt.h>
+/****************************************
+ * rainbow demo                        
+ * wade ryan
+ * May 2020
+ *
+ * Compile with gcc or g++:
+ * $ g++ -lwiringPi -lNeoPixelRPi rainbow.cpp -o ../bin/rainbow
+ *
+ * Executed with:
+ * $ sudo ../bin/rainbow
+ *
+ ****************************************/
 
-#include <neopixel.h>
+#include <stdio.h>
+#include <neopixel.h>  
 
 
 // defaults for cmdline options
+// * you may want to check out Jeremy's project for further clarification
+//   on the target frequency options, as well as the strip options
+//   https://github.com/jgarff/rpi_ws281x
+//
+#define STRIP_TYPE              WS2812_STRIP
 #define TARGET_FREQ             WS2811_TARGET_FREQ
-#define GPIO_PIN                18
-#define DMA                     10
-int led_count =                144;
-
-
-
-
-
+#define GPIO_PIN                18   // BCM numbering system
+#define DMA                     10   // DMA=Direct Memory Access
+int led_count =                144;  // number of pixels in your led strip
+                                     // If you have a matrix, you should use
+                                     // the universal display driver as it 
+                                     // supports neopixel matrices and 
+                                     // drawing lines, circles, text, and 
+                                     // even bmp images
+                                     // https://github.com/wryan67/udd_rpi_lib
 
 
 int main(int argc, char* argv[]) {
-    int ret;
 
+    int ret=neopixel_init(STRIP_TYPE, WS2811_TARGET_FREQ, DMA, GPIO_PIN, led_count);
 
-    if (neopixel_init(WS2812_STRIP, WS2811_TARGET_FREQ, DMA, GPIO_PIN, led_count)!=0) {
-        fprintf(stderr, "ws2811_init failed: %s\n", neopixel_error(ret));
+    if (ret!=0) {
+        fprintf(stderr, "neopixel initialization failed: %s\n", neopixel_error(ret));
         return 9;
     }
 
-    neopixel_setBrighness(8);
+    neopixel_setBrighness(10);   // valid values are 0 to 255
 
     int count = -1;
-    while (true) {
+    while (true) {  
         ++count;
 
-        int clr = count % 256;
-        int pixelColor =  neopixel_wheel(clr);
-
-//        printf("clr=%3d  0x%06x\r", clr, pixelColor);  fflush(stdout);
+        int color = count % 256;      // starting color is between 0 & 255 
 
         for (int i = 0; i < led_count; ++i) {
-            neopixel_setPixel(i,neopixel_wheel((i + count) % 256));
-          
+            // set pixel only changes the colors in memory
+            neopixel_setPixel(i,neopixel_wheel((i + color) % 256));  
         }
 
-
-
+        // render physically updates the neopixels
         neopixel_render();
-        // frames/sec
-        usleep(1000000 / 60);
 
+        // frames/sec delay
+        usleep(1000000 / 60);
     }
 
-    neopixel_clear();
+// not necessary
+    neopixel_clear();     // turn off all pixels
     neopixel_render();
+
+// graceful DMA cleanup; not necessary for most applications
     neopixel_close();
 
-    printf("\n");
     return ret;
 }
