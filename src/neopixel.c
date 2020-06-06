@@ -44,7 +44,7 @@ const char *neopixel_error(int ret) {
     
 
 
-void neopixel_setBrighness(int brightness) {
+void neopixel_setBrightness(int brightness) {
     ledstring.channel[0].brightness=brightness;
 }
 

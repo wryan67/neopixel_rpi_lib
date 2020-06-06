@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
         return 9;
     }
 
-    neopixel_setBrighness(10);   // valid values are 0 to 255
+    neopixel_setBrightness(10);   // valid values are 0 to 255
 
     int count = -1;
     while (true) {  
