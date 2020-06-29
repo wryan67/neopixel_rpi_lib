@@ -42,7 +42,15 @@ int main(int argc, char* argv[]) {
         return 9;
     }
 
-    neopixel_setBrightness(10);   // valid values are 0 to 255
+    if (argc==3 && strcmp(argv[1],"-b")==0) {
+      int brightness=10;
+      sscanf(argv[2],"%d",&brightness);
+      printf("brightness set to %d\n",brightness);
+      neopixel_setBrightness(brightness);   // valid values are 0 to 255
+    } else {
+      printf("brightness set to 10\n");
+      neopixel_setBrightness(10);   // valid values are 0 to 255
+    }
 
     int count = -1;
     while (true) {  
