@@ -35,7 +35,7 @@ int neopixel_clear(void);
 int neopixel_render(void);
 int neopixel_wheel(unsigned char color);                  
 void neopixel_setBrightness(int);
-void neopixel_setPixel(int pixel,int color);
+void neopixel_setPixel(int pixel,uint32_t color);
 void neopixel_close();
 
 const char *neopixel_error(int ret);

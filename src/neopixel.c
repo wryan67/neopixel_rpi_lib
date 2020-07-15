@@ -110,6 +110,6 @@ void neopixel_close() {
     ws2811_fini(&ledstring);
 }
 
-void neopixel_setPixel(int pixel,int color) {
+void neopixel_setPixel(int pixel,uint32_t color) {
     matrix[pixel]=color;
 }
