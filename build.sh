@@ -134,6 +134,7 @@ executable() {
 
   userEcho $CC -lwiringPi -l$DYNAMIC example/rainbow.cpp -o $BIN/rainbow
   userEcho $CC -lwiringPi -l$DYNAMIC example/off.cpp  -o $BIN/off
+  userEcho $CC -lwiringPi -l$DYNAMIC example/wheelColors.cpp  -o $BIN/wheelColors
 
 }
 
