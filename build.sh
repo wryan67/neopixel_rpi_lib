@@ -128,14 +128,20 @@ userEcho() {
 executable() {
   [ "$INSTALL" != 1 ] && install
 
-  echo linking demos
+  PROGRAM=example/chaser.cpp
+  echo linking demos $PROGRAM
   STATIC=${DESTDIR}${PREFIX}/lib/$LIBNAME.a
   DYNAMIC=`echo $LIBNAME | sed 's/^lib//'`
 
-  userEcho $CC -lwiringPi -l$DYNAMIC example/rainbow.cpp -o $BIN/rainbow
-  userEcho $CC -lwiringPi -l$DYNAMIC example/off.cpp  -o $BIN/off
-  userEcho $CC -lwiringPi -l$DYNAMIC example/wheelColors.cpp  -o $BIN/wheelColors
-
+  if [ -f "$PROGRAM" ];then
+    EXE=`basename $PROGRAM .cpp`
+    userEcho $CC -lwiringPi -l$DYNAMIC $1 $PROGRAM -o $BIN/$EXE
+  else
+    userEcho $CC -lwiringPi -l$DYNAMIC example/rainbow.cpp -o $BIN/rainbow
+    userEcho $CC -lwiringPi -l$DYNAMIC example/off.cpp  -o $BIN/off
+    userEcho $CC -lwiringPi -l$DYNAMIC example/wheelColors.cpp  -o $BIN/wheelColors
+    userEcho $CC -lwiringPi -l$DYNAMIC example/chaser.cpp  -o $BIN/chaser
+  fi
 }
 
 #:###################:#
@@ -226,7 +232,7 @@ fi
 
 for COMMAND in $* 
 do
-  typeset -l $COMMAND
+  typeset -l COMMAND
   case $COMMAND in
     clean)     CLEAN=1
                ;;
@@ -251,7 +257,7 @@ done
 [ $BUILD = 1 ]       && build
 [ $PACKAGE = 1 ]     && package
 [ $INSTALL = 1 ]     && install
-[ $EXECUTABLE = 1 ]  && executable
+[ $EXECUTABLE = 1 ]  && executable 
 [ $REMOVE = 1 ]      && remove
 
 chown -R `logname`:`ls -lad .|awk '{print $4}'` .
