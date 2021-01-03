@@ -128,6 +128,7 @@ userEcho() {
 executable() {
   [ "$INSTALL" != 1 ] && install
 
+  mkdir bin
   PROGRAM=example/chaser.cpp
   echo linking demos $PROGRAM
   STATIC=${DESTDIR}${PREFIX}/lib/$LIBNAME.a
