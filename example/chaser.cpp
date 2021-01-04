@@ -47,17 +47,46 @@ int main(int argc, char* argv[]) {
         return 9;
     }
 
-    if (argc==3 && strcmp(argv[1],"-b")==0) {
-      int brightness=24;
-      sscanf(argv[2],"%d",&brightness);
-      printf("brightness set to %d\n",brightness);
-      neopixel_setBrightness(brightness);   // valid values are 0 to 255
-    } else {
-      printf("brightness set to 10\n");
-      neopixel_setBrightness(10);   // valid values are 0 to 255
+    int speed=20;
+    int brightness=24;
+    int pulse=false;
+    uint32_t pulseColor;
+
+    for (int arg=1;arg<argc;arg+=2) {
+        if (strcmp(argv[arg],"-b")==0) {
+            sscanf(argv[arg+1],"%d",&brightness);
+        } else 
+        if (strcmp(argv[arg],"-s")==0) {
+            sscanf(argv[arg+1],"%d",&speed);
+        } else 
+        if (strcmp(argv[arg],"-p")==0) {
+            sscanf(argv[arg+1],"%lx",&pulseColor);
+            pulse=true;
+        }
     }
 
+    printf("speed set to %d\n",speed    );
+    printf("brightness set to %d\n",brightness);
+    neopixel_setBrightness(brightness);   // valid values are 0 to 255
 
+    if (pulse) {
+        for (int j=0;j<led_count;++j) {
+            neopixel_setPixel(j, pulseColor);  
+        }
+        while (true) {
+            int b;
+            for (b=brightness/2;b<brightness;++b) {
+                neopixel_setBrightness(b);   // valid values are 0 to 255
+                neopixel_render();
+                usleep(speed*1000);
+            }
+            for (;b>brightness/2;--b) {
+                neopixel_setBrightness(b);   // valid values are 0 to 255
+                neopixel_render();
+                usleep(speed*1000);
+            }
+        }
+    }
 
 // printf("  %03d, #%06x  (%03d,%03d,%03d)\n"
 //,i,wheelColor, wheelColor>>16, (wheelColor>>8)&0xff, wheelColor&0xff);
@@ -88,7 +117,7 @@ int main(int argc, char* argv[]) {
                 neopixel_setPixel(p, shades[j]);  
             }
             neopixel_render();
-            usleep(20*1000);
+            usleep(speed*1000);
         }
     }
     int r=0;
