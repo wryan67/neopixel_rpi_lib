@@ -129,7 +129,7 @@ executable() {
   [ "$INSTALL" != 1 ] && install
 
   mkdir bin
-  PROGRAM=example/chaser.cpp
+# PROGRAM=example/chaser.cpp
   echo linking demos $PROGRAM
   STATIC=${DESTDIR}${PREFIX}/lib/$LIBNAME.a
   DYNAMIC=`echo $LIBNAME | sed 's/^lib//'`
