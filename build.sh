@@ -261,6 +261,6 @@ done
 [ $EXECUTABLE = 1 ]  && executable 
 [ $REMOVE = 1 ]      && remove
 
-chown -R `logname`:`ls -lad .|awk '{print $4}'` .
+chown -R `whoami`:`ls -lad .|awk '{print $4}'` .
 
 exit 0
