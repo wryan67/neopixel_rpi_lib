@@ -46,6 +46,10 @@ The install should have also compiled the demo programs to the bin folder.  Chec
 
 The user may create their own colors or use the color chart below to choose colors from.  The method neopixel_wheel(int color), where color is a number betweeen 0 and 255, will return a valid RGB color which matches the chart below. 
 
+![thumbnail](https://raw.githubusercontent.com/wryan67/neopixel_rpi_lib/master/readme/ColorWheel.png)
+
+Here are the numbers which represent the associated "pure" colors:
+
 | Color   | Num |
 | ------- | --- |
 | Green   |   0 |
@@ -54,8 +58,6 @@ The user may create their own colors or use the color chart below to choose colo
 | Magenta | 128 |
 | Blue    | 170 |
 | Cyan    | 212 |
-
-![thumbnail](https://raw.githubusercontent.com/wryan67/neopixel_rpi_lib/master/readme/ColorWheel.png)
 
 ## Circuit diagram
 
