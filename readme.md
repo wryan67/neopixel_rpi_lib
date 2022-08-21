@@ -50,14 +50,19 @@ The user may create their own colors or use the color chart below to choose colo
 
 Here are the numbers which represent the associated "pure" colors:
 
-| Color   | Num |
-| ------- | --- |
-| Green   |   0 |
-| Yellow  |  42 |
-| Red     |  85 |
-| Magenta | 128 |
-| Blue    | 170 |
-| Cyan    | 212 |
+  000, #00ff00  (000,255,000)
+  085, #ff0000  (255,000,000)
+  170, #0000ff  (000,000,255)
+
+
+| Color   | Num |HTML   |RGB          |
+| ------- | --- |-------|-------------|
+| Green   | 000 |#00ff00|(000,255,000)|
+| Yellow  | 042 |#7e8100|(126,129,000)|
+| Red     | 085 |#ff0000|(255,000,000)|
+| Magenta | 128 |#7e0081|(126,000,129)|
+| Blue    | 170 |#0000ff|(000,000,255)|
+| Cyan    | 212 |#007e81|(000,126,129)|
 
 ## Circuit diagram
 
