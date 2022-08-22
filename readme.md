@@ -50,10 +50,6 @@ The user may create their own colors or use the color chart below to choose colo
 
 Here are the numbers which represent the associated "pure" colors:
 
-  000, #00ff00  (000,255,000)
-  085, #ff0000  (255,000,000)
-  170, #0000ff  (000,000,255)
-
 
 | Color   | Num |HTML   |RGB          |
 | ------- | --- |-------|-------------|
